@@ -1,0 +1,5 @@
+node_modules/
+temp/
+.env
+
+// backing up the feed won't do anything, we need to navigate the wireless DRAM pixel!
