@@ -1,51 +1,69 @@
-// index.js
 const simpleGit = require('simple-git');
-const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
+const { modifyRealFile } = require('./utils/fileModifier');
 
 const git = simpleGit();
-const { modifyOrCreateFile } = require('./utils/fileModifier');
-const messages = require('./utils/commitMessages');
-const { delay, randomInterval } = require('./utils/helpers');
+const commitMessages = [
+  'Fix typo in documentation',
+  'Update README with latest info',
+  'Refactor: improve readability',
+  'Docs: update comments in utils',
+  'Style: format code with Prettier',
+  'Enhance error handling in core',
+  'Optimize function performance',
+  'Add log output for debug mode',
+  'Fix broken link in markdown',
+  'Update dependencies for security',
+  'Add missing return statement',
+  'Refactor variable naming',
+  'Remove unused imports',
+  'Simplify conditional logic',
+  'Patch issue with async calls',
+  'Add TODO comments for review',
+  'Clean up whitespace',
+  'Convert var to const/let',
+  'Add fallback for undefined props',
+  'Improve user feedback on error'
+];
 
-const commitCount = parseInt(process.argv[2], 10) || 50;
-
-async function ensureTempDir() {
-  const dir = path.resolve('./temp');
-  await fs.ensureDir(dir);
+function getRandomMessage() {
+  return commitMessages[Math.floor(Math.random() * commitMessages.length)];
 }
 
-async function generateCommits(count) {
-  console.log(chalk.cyan(`\n🌱 Starting to generate ${count} synthetic commits...\n`));
+async function simulateCommits(count = 50) {
+  console.log(chalk.green(`🌱 Starting to generate ${count} synthetic commits...\n`));
 
-  for (let i = 0; i < count; i++) {
-    const file = modifyOrCreateFile();
-    const message = messages[Math.floor(Math.random() * messages.length)];
+  for (let i = 1; i <= count; i++) {
+    try {
+      const filePath = modifyRealFile();
 
-    await git.add(file);
-    await git.commit(message);
+      await git.add(filePath);
+      const message = getRandomMessage();
+      await git.commit(message);
 
-    console.log(chalk.green(`✅ Commit #${i + 1}: "${message}"`));
+      console.log(chalk.blue(`✅ Commit #${i}: "${message}"`));
+    } catch (err) {
+      console.error(chalk.red(`❌ Error: ${err.message}`));
+      break;
+    }
 
-    await delay(randomInterval());
+    // Optional delay to simulate real activity (200-800ms)
+    await new Promise(res => setTimeout(res, Math.random() * 600 + 200));
   }
 
-  console.log(chalk.yellow(`\n🚀 All ${count} commits generated.`));
-}
-
-async function pushToRemote() {
-  console.log(chalk.cyan('\n🔄 Pushing changes to origin...'));
-  await git.push();
-  console.log(chalk.green('✅ Pushed to remote repository successfully.'));
-}
-
-(async () => {
   try {
-    await ensureTempDir();
-    await generateCommits(commitCount);
-    await pushToRemote();
-  } catch (err) {
-    console.error(chalk.red(`❌ Error: ${err.message}`));
+    await git.push();
+    console.log(chalk.green(`\n🚀 All ${count} commits pushed successfully!`));
+  } catch (pushErr) {
+    console.error(chalk.red(`❌ Push failed: ${pushErr.message}`));
   }
-})();
+}
+
+// Parse CLI arg for commit count
+const args = process.argv.slice(2);
+const commitCount = parseInt(args[0], 10) || 50;
+
+simulateCommits(commitCount);
+
+// We need to input the open-source UDP hard drive!
