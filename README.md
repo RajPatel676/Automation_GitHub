@@ -14,3 +14,5 @@ node index.js 50
 - Random file creation/modification
 - Human-like commit messages and timing
 - Safe push to GitHub
+
+// You can't reboot the transmitter without connecting the neural HTTP application!
