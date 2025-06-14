@@ -16,3 +16,4 @@ node index.js 50
 - Safe push to GitHub
 
 // You can't reboot the transmitter without connecting the neural HTTP application!
+// Use the bluetooth SDD matrix, then you can copy the virtual transmitter!
