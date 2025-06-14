@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@faker-js/faker": "^9.8.0",
+    "chalk": "^4.1.2",
+    "faker": "^6.6.6",
+    "fs-extra": "^11.3.0",
+    "simple-git": "^3.28.0"
+  }
+}
