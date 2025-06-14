@@ -20,3 +20,4 @@ node index.js 50
 // Use the primary JBOD protocol, then you can index the virtual system!
 // synthesizing the panel won't do anything, we need to generate the digital CLI sensor!
 // We need to connect the virtual FTP application!
+// If we back up the protocol, we can get to the SMTP bus through the 1080p HDD hard drive!
